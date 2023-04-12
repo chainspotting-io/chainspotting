@@ -19,12 +19,12 @@ const sockets = [
   ws.on('error', console.error);
 
   ws.on('open', function open() {
-    console.log(`${socket.name} open with ${socket.uri}`);
+    console.log(`${socket.name} connection with ${socket.uri} opened`);
     //ws.send('something');
   });
 
   ws.on('close', function open() {
-    console.log(`${socket.name} closed with ${socket.uri}`);
+    console.log(`${socket.name} connection with ${socket.uri} closed`);
   });
 
   ws.on('message', function message(data) {
