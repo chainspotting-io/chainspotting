@@ -4,7 +4,7 @@ import { workerData, parentPort } from 'node:worker_threads';
 import { WebSocketServer } from 'ws';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { MongoClient, ObjectId } from 'mongodb';
-import Herald from './Herald.js';
+import Broadcaster from './Broadcaster.js';
 import { getBlock } from './chain.js';
 import { range } from './util.js';
 
@@ -22,7 +22,7 @@ const db = {
   cert: '/etc/pki/tls/certs/mongo.pem',
 };
 
-const herald = new Herald();
+const broadcaster = new Broadcaster();
 
 const chunk = {
   size: 100
@@ -75,7 +75,7 @@ const init = async () => {
     };
     spotter.server.singleton.on('connection', (client, request) => {
       const { 'x-real-ip': ip, 'sec-websocket-key': key } = request.headers;
-      herald.subscribe({ ip, key }, client);
+      broadcaster.subscribe({ ip, key }, client);
     });
   }
   return {
@@ -96,7 +96,7 @@ const spot = async () => {
           spot: (await collection.find().sort({ number: -1 }).limit(1).toArray())[0].number,
         }
       };
-      herald.send(JSON.stringify({ latest }));
+      broadcaster.send(JSON.stringify({ latest }));
       while (latest.block.spot < latest.block.chain) {
         if (!!latest.insert) {
           delete latest.insert;
@@ -122,11 +122,11 @@ const spot = async () => {
           await new Promise(r => setTimeout(r, 3000));
         }
         latest.block.chain = parseInt((await api.rpc.chain.getHeader()).number, 10);
-        herald.send(JSON.stringify({ latest }));
+        broadcaster.send(JSON.stringify({ latest }));
       }
     } catch (error) {
       console.error(error);
-      herald.send(`{"error":${JSON.stringify(error, Object.getOwnPropertyNames(error))}}`);
+      broadcaster.send(`{"error":${JSON.stringify(error, Object.getOwnPropertyNames(error))}}`);
     }
   }
 };

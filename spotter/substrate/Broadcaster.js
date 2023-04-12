@@ -1,6 +1,6 @@
 'use strict';
 
-export default class Herald {
+export default class Broadcaster {
   constructor() {
     this.maxMessages = 30;
     this.messages = [];
