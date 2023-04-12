@@ -1,0 +1,21 @@
+files:
+
+  /etc/pki/tls/certs/manta.polkadot.spotter.chainspotting.io.crt:
+    mode: "000400"
+    owner: root
+    group: root
+    content: |
+      -----BEGIN CERTIFICATE-----
+      replace with the contents of fullchain.pem
+      remove .example extension from filename
+      -----END CERTIFICATE-----
+
+  /etc/pki/tls/certs/manta.polkadot.spotter.chainspotting.io.key:
+    mode: "000400"
+    owner: root
+    group: root
+    content: |
+      -----BEGIN PRIVATE KEY-----
+      replace with the contents of privkey.pem
+      remove .example extension from filename
+      -----END PRIVATE KEY-----

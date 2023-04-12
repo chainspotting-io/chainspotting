@@ -1,0 +1,11 @@
+files:
+
+  /etc/pki/tls/certs/mongo.pem:
+    mode: "000644"
+    owner: root
+    group: root
+    content: |
+      -----BEGIN CERTIFICATE-----
+      replace with the contents of mongo.pem
+      remove .example extension from filename
+      -----END PRIVATE KEY-----
