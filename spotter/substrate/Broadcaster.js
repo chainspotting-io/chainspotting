@@ -6,7 +6,7 @@ export default class Broadcaster {
     this.messages = [];
     this.subscribers = {};
     this.subscribe = this.subscribe.bind(this);
-    this.send = this.send.bind(this);
+    this.broadcast = this.broadcast.bind(this);
   }
   subscribe(id, subscriber) {
     console.log(`creating subscription for ${id.key}@${id.ip}`);
