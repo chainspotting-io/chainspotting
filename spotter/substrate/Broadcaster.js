@@ -20,7 +20,7 @@ export default class Broadcaster {
     console.log(`created subscription for ${id.key}@${id.ip}`);
     this.messages.map((message) => this.subscribers[id.key].send(message));
   }
-  send(message) {
+  broadcast(message) {
     if (this.messages.length === 0 || (this.messages.slice(-1)[0] !== message)) {
       console.log(message);
       this.messages.push(message);

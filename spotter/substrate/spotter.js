@@ -96,7 +96,7 @@ const spot = async () => {
           spot: (await collection.find().sort({ number: -1 }).limit(1).toArray())[0].number,
         }
       };
-      broadcaster.send(JSON.stringify({ latest }));
+      broadcaster.broadcast(JSON.stringify({ latest }));
       while (latest.block.spot < latest.block.chain) {
         if (!!latest.insert) {
           delete latest.insert;
@@ -122,11 +122,11 @@ const spot = async () => {
           await new Promise(r => setTimeout(r, 3000));
         }
         latest.block.chain = parseInt((await api.rpc.chain.getHeader()).number, 10);
-        broadcaster.send(JSON.stringify({ latest }));
+        broadcaster.broadcast(JSON.stringify({ latest }));
       }
     } catch (error) {
       console.error(error);
-      broadcaster.send(`{"error":${JSON.stringify(error, Object.getOwnPropertyNames(error))}}`);
+      broadcaster.broadcast(`{"error":${JSON.stringify(error, Object.getOwnPropertyNames(error))}}`);
     }
   }
 };
